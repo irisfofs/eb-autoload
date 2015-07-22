@@ -37,31 +37,38 @@ var badgePaymentType = config["badgePaymentType"];
 
 casper.start("https://www.eventbrite.com/login/", function() {
 	// Set it up so remote logging gets replayed locally
-	// casper.on("remote.message", function(message) {
-	// 	this.echo("remote console.log: " + message);
-	// });
+	casper.on("remote.message", function(message) {
+		this.echo("remote console.log: " + message);
+	});
 
 	casper.on( 'page.error', function (msg, trace) {
 		this.echo( 'Error: ' + msg, 'ERROR' );
 	});
 
-	this.fill("form.responsive-form.l-block-3", loginCredentials, true);
+	this.fill("form.responsive-form.l-block-3", loginCredentials, false);
+  this.click("input[type='submit']");
 });
 
 casper.waitForUrl("https://www.eventbrite.com/", function() {
+  capture(casper, "post_login.png");
+
 	var iterationCount = 0;
 	casper.each(badgeData, function(self, badgeInfo) {
 
 		self.thenOpen('https://www.eventbrite.com/attendees-add?eid='+eid, function() {
 			this.page.injectJs('includes/jquery.min.js');
+
+      capture(self, 'attendees_add_pre.png');
 				
 			var name = this.evaluate(function(badgeTypeString) {
+        console.log($("tr.ticket_row td:first-child").length);
 				var temp = $("tr.ticket_row td:first-child").filter(function() {
 					var txt = $(this).text();
 					var index = txt.indexOf(badgeTypeString);
-					// console.log("(" + badgeTypeString + ") Badge type " + txt + " || " + index);
+					console.log("(" + badgeTypeString + ") Badge type " + txt + " || " + index);
 					return index > -1; // JavaScript has no 'contains' method, apparently
 				});
+        console.log(temp.length);
 				return temp.parent().find('input[name^="quant"]')[0].name;
 			}, badgeTypeString);
 			this.echo("Input name " + name, 'INFO');
