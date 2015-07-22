@@ -28,11 +28,10 @@ var BADGE_NAME = 2;
 var EMAIL = 3;
 var FIRST_BADGE_COLUMN = 1;
 var LAST_BADGE_COLUMN = 15;
-// var badgeData = [/*["1","1001-A","Cute N' Kitschy","xiagu@bronycon.org","Kelly Sapp","Kelly Sapp","","","","","","","","","","","","",""],*/
-				// ["2","1001-B","Angel Trip Studio","xiagu@bronycon.org","Jazmin Ruotolo","Jaz Kitty","Oscar Matos","Papi-san","","","","","","","","","N/A","$50.00","8R959523JM276693B"]];/*,
-//				["1","1002-A","Ajin Arts","xiagu@bronycon.org","Ciro Ramirez Jr","Ajin","","","","","","","","","","","","",""]*/
-//				["6","710","Lemonbrat: Cutie Corral","xiagu@bronycon.org","Corey Wood","Dashing Spirits","Barbara Staples","Jezebel Tart","Michael Smith","Bitz","Ryan Numrich","Helping Hooves","Lucie Rider","Fluttershy","Matt Jacob","Buckie","N/A","$200.00 ","1M393666A6289905P"]];
-// var badgeData = [["4","420","Butts N Stuff","xiagu@bronycon.org","Stephanie Sanjurjo","Stephy Butts","Raul Ortiz","darkmagician1212","TKeyah Nowell","Le' Butch","Jesse Young","Knucklesjes","","","","","N/A","$100.00 ","74Y59622MG0138548 / 3SS39107FL379892U"]];
+
+var badgeData = [[1,"Lorem Ipsum","DevBadgerDontAccept","registration@bronycon.org",""],
+                 [1,"John Testerman","Test","registration@bronycon.org",""]];
+
 var badgeTypeString = config["badgeTypeString"];
 var badgePaymentType = config["badgePaymentType"];
 
