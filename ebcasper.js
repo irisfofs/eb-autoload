@@ -37,9 +37,9 @@ var badgePaymentType = config["badgePaymentType"];
 
 casper.start("https://www.eventbrite.com/login/", function() {
 	// Set it up so remote logging gets replayed locally
-	casper.on("remote.message", function(message) {
-		this.echo("remote console.log: " + message);
-	});
+	// casper.on("remote.message", function(message) {
+	// 	this.echo("remote console.log: " + message);
+	// });
 
 	casper.on( 'page.error', function (msg, trace) {
 		this.echo( 'Error: ' + msg, 'ERROR' );
@@ -67,14 +67,14 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
       capture(self, 'attendees_add_pre.png');
 				
 			var name = this.evaluate(function(badgeTypeString) {
-        console.log($("tr.ticket_row td:first-child").length);
+        // console.log($("tr.ticket_row td:first-child").length);
 				var temp = $("tr.ticket_row td:first-child").filter(function() {
 					var txt = $(this).text();
 					var index = txt.indexOf(badgeTypeString);
-					console.log("(" + badgeTypeString + ") Badge type " + txt + " || " + index);
+					// console.log("(" + badgeTypeString + ") Badge type " + txt + " || " + index);
 					return index > -1; // JavaScript has no 'contains' method, apparently
 				});
-        console.log(temp.length);
+        // console.log(temp.length);
 				return temp.parent().find('input[name^="quant"]')[0].name;
 			}, badgeTypeString);
 			this.echo("Input name " + name, 'INFO');
