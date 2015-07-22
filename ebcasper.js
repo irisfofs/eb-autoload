@@ -45,10 +45,8 @@ casper.start("https://www.eventbrite.com/login/", function() {
 	casper.on( 'page.error', function (msg, trace) {
 		this.echo( 'Error: ' + msg, 'ERROR' );
 	});
-	
-  capture(casper, 'login.png');
 
-	this.fill("form.responsive-form", loginCredentials, true);
+	this.fill("form.responsive-form.l-block-3", loginCredentials, true);
 });
 
 casper.waitForUrl("https://www.eventbrite.com/", function() {
