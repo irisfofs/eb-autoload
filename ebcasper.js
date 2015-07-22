@@ -1,3 +1,5 @@
+"use strict"
+
 var casper = require('casper').create({
 	pageSettings: {
 		loadImages:  false,        // The WebPage instance used by Casper will
@@ -10,17 +12,21 @@ var casper = require('casper').create({
 // var badgeData = require('vendor_final_update.json');
 var config = require("config.json")
 // Shift off the header row. That's not helpful.
-var headers = badgeData.shift();
+// var headers = badgeData.shift();
 
 // API Test: 1234567890
 // Real Event 1234567890
 var eid = config["eventId"];
+var loginCredentials = {
+  email: config["login"]["email"],
+  password: config["login"]["password"]
+};
 
 var COUNT = 0;
-var BOOTH_NUM = 1;
-var BOOTH_NAME = 2;
+var FULL_NAME = 1;
+var BADGE_NAME = 2;
 var EMAIL = 3;
-var FIRST_BADGE_COLUMN = 4;
+var FIRST_BADGE_COLUMN = 1;
 var LAST_BADGE_COLUMN = 15;
 // var badgeData = [/*["1","1001-A","Cute N' Kitschy","xiagu@bronycon.org","Kelly Sapp","Kelly Sapp","","","","","","","","","","","","",""],*/
 				// ["2","1001-B","Angel Trip Studio","xiagu@bronycon.org","Jazmin Ruotolo","Jaz Kitty","Oscar Matos","Papi-san","","","","","","","","","N/A","$50.00","8R959523JM276693B"]];/*,
@@ -30,7 +36,7 @@ var LAST_BADGE_COLUMN = 15;
 var badgeTypeString = config["badgeTypeString"];
 var badgePaymentType = config["badgePaymentType"];
 
-casper.start('https://www.eventbrite.com/login', function() {
+casper.start("https://www.eventbrite.com/login/", function() {
 	// Set it up so remote logging gets replayed locally
 	// casper.on("remote.message", function(message) {
 	// 	this.echo("remote console.log: " + message);
@@ -40,7 +46,9 @@ casper.start('https://www.eventbrite.com/login', function() {
 		this.echo( 'Error: ' + msg, 'ERROR' );
 	});
 	
-	this.fill('form[action="/login"]', loginCredentials, true);
+  capture(casper, 'login.png');
+
+	this.fill("form.responsive-form", loginCredentials, true);
 });
 
 casper.waitForUrl("https://www.eventbrite.com/", function() {
@@ -152,7 +160,7 @@ function extractCustomQuestionNames(casperInstance, question) {
 var captureId = 0;
 /// For taking numbered screenshots
 function capture(casperInstance, filenameSuffix) {
-	casperInstance.capture('pic' + captureId + '_' + filenameSuffix);
+	casperInstance.capture('captures/pic' + captureId + '_' + filenameSuffix);
 	captureId++;
 }
 
