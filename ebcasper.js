@@ -117,11 +117,7 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 			var attendeeLastNames = this.getElementsAttribute('input[name$="_last_name"]', 'name');
 			var attendeeEmailAddresses = this.getElementsAttribute('input[name$="_email_address"]:not([name*="confirm"])', 'name');
 			// Custom questions
-			var attendeeBadgeNames = extractCustomQuestionNames(this, "Badge Name:");
-			var attendeeBoothNumberNames = extractCustomQuestionNames(this, "Booth Number");
-			var attendeeBoothNameNames = extractCustomQuestionNames(this, "Booth Name");
-
-			// all the numbers match up now
+			var attendeeBadgeNames = extractCustomQuestionNames(this, "Badge Name");
 
 			// Make it once so we can fill everything at once >:D
 			var selectorObj = {};
@@ -136,8 +132,6 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 				selectorObj['input[name='+attendeeLastNames[i]+']'] = fullNameLast;
 				selectorObj['input[name='+attendeeEmailAddresses[i]+']'] = badgeInfo[EMAIL]; // always the same
 				selectorObj['input[name='+attendeeBadgeNames[i]+']'] = badgeInfo[infoIndex + 1];
-				selectorObj['input[name='+attendeeBoothNumberNames[i]+']'] = badgeInfo[BOOTH_NUM]; // always the same
-				selectorObj['input[name='+attendeeBoothNameNames[i]+']'] = badgeInfo[BOOTH_NAME]; // always the same
 			}
 			this.fillSelectors('form#registrationForm', selectorObj, false);
 
