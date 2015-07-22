@@ -1,0 +1,3 @@
+{ "name" : "eb-autoload"
+, "version" : "0.1.0"
+, "dependencies" : { "casperjs" : "*" } }
