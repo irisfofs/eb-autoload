@@ -46,8 +46,14 @@ casper.start("https://www.eventbrite.com/login/", function() {
 	});
 
 	this.fill("form.responsive-form.l-block-3", loginCredentials, false);
-  this.click("input[type='submit']");
+  casper.click("form.responsive-form.l-block-3 input[type='submit']");
+
+  capture(casper, "at_login.png");
 });
+
+casper.wait(10000, function() {
+  // Need to wait for some amount of time for the login to finish
+})
 
 casper.waitForUrl("https://www.eventbrite.com/", function() {
   capture(casper, "post_login.png");
