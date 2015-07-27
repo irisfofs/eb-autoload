@@ -9,7 +9,7 @@ var casper = require('casper').create({
 	verbose: true                  // log messages will be printed out to the console
 });
 
-// var badgeData = require('vendor_final_update.json');
+var badgeData = require(casper.cli.args[0]);
 var config = require("config.json")
 // Shift off the header row. That's not helpful.
 // var headers = badgeData.shift();
@@ -29,8 +29,8 @@ var EMAIL = 3;
 var FIRST_BADGE_COLUMN = 1;
 var LAST_BADGE_COLUMN = 15;
 
-var badgeData = [[1,"Lorem Ipsum","DevBadgerDontAccept","registration@bronycon.org",""],
-                 [1,"John Testerman","Test","registration@bronycon.org",""]];
+// var badgeData = [/*[1,"Lorem Ipsum","DevBadgerDontAccept","registration@bronycon.org",""],*/
+                 // [1,"John Testerman","Test","registration@bronycon.org",""]];
 
 var badgeTypeString = config["badgeTypeString"];
 var badgePaymentType = config["badgePaymentType"];
