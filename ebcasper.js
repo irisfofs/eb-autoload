@@ -17,10 +17,6 @@ var config = require("config.json")
 // API Test: 1234567890
 // Real Event 1234567890
 var eid = config["eventId"];
-var loginCredentials = {
-  email: config["login"]["email"],
-  password: config["login"]["password"]
-};
 
 var COUNT = -1;
 var FULL_NAME = 0;
@@ -44,6 +40,11 @@ casper.start("https://www.eventbrite.com/login/", function() {
 	casper.on( 'page.error', function (msg, trace) {
 		this.echo( 'Error: ' + msg, 'ERROR' );
 	});
+
+  var loginCredentials = {
+    email: config["login"]["email"],
+    password: config["login"]["password"]
+  };
 
 	this.fill("form.responsive-form.l-block-3", loginCredentials, false);
   casper.click("form.responsive-form.l-block-3 input[type='submit']");
