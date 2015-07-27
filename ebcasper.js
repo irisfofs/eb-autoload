@@ -22,11 +22,11 @@ var loginCredentials = {
   password: config["login"]["password"]
 };
 
-var COUNT = 0;
-var FULL_NAME = 1;
-var BADGE_NAME = 2;
-var EMAIL = 3;
-var FIRST_BADGE_COLUMN = 1;
+var COUNT = -1;
+var FULL_NAME = 0;
+var BADGE_NAME = 1;
+var EMAIL = 2;
+var FIRST_BADGE_COLUMN = 0;
 var LAST_BADGE_COLUMN = 15;
 
 // var badgeData = [/*[1,"Lorem Ipsum","DevBadgerDontAccept","registration@bronycon.org",""],*/
@@ -61,6 +61,12 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 	var iterationCount = 0;
 	casper.each(badgeData, function(self, badgeInfo) {
 
+    if(COUNT < 0) {
+      var countOfBadges = 1;
+    } else {
+      var countOfBadges = badgeInfo[COUNT];
+    }
+
 		self.thenOpen('https://www.eventbrite.com/attendees-add?eid='+eid, function() {
 			this.page.injectJs('includes/jquery.min.js');
 
@@ -81,7 +87,7 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 			
 			// Have to create object this way to set a property name based on a variable
 			var obj = {};
-			obj['input[name="'+name+'"]'] = badgeInfo[COUNT];
+			obj['input[name="'+name+'"]'] = countOfBadges;
 			this.fillSelectors('form[name="ticketForm"]', obj, false);
 
 			// Change the payment type dropdown. Should be PayPal for vendors and complimentary for everyone else.
@@ -100,7 +106,7 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 			this.page.injectJs('includes/jquery.min.js');
 
 			// ********************* Order information
-			var fullNameArr = badgeInfo[FIRST_BADGE_COLUMN].split(' ');
+			var fullNameArr = badgeInfo[FULL_NAME].split(' ');
 			var fullNameFirst = fullNameArr.shift();
 			var fullNameLast = fullNameArr.join(' ');
 			if (fullNameLast === "") {
@@ -121,7 +127,7 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 
 			// Make it once so we can fill everything at once >:D
 			var selectorObj = {};
-			for(var i = 0; i < badgeInfo[COUNT]; i++) {
+			for(var i = 0; i < countOfBadges; i++) {
 				var infoIndex = FIRST_BADGE_COLUMN + i*2;
 				// Split full name into first and last by the first space
 				var fullNameArr = badgeInfo[infoIndex].split(' ');
