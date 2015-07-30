@@ -112,7 +112,7 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 			this.page.injectJs('includes/jquery.min.js');
 
 			// ********************* Order information
-			var fullNameArr = badgeInfo[FULL_NAME].split(' ');
+			var fullNameArr = badgeInfo[FULL_NAME].trim().split(' ');
 			var fullNameFirst = fullNameArr.shift();
 			var fullNameLast = fullNameArr.join(' ');
 			if (fullNameLast === "") {
@@ -121,7 +121,7 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 			this.fill('form#registrationForm', {
 				first_name: fullNameFirst,
 				last_name: fullNameLast,
-				email_address: badgeInfo[EMAIL]
+				email_address: badgeInfo[EMAIL].trim()
 			}, false);
 
 			// ********************* Information for each attendee
@@ -134,7 +134,7 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 			// Make it once so we can fill everything at once >:D
 			var selectorObj = {};
 			// Split full name into first and last by the first space
-			var fullNameArr = badgeInfo[FULL_NAME].split(' ');
+			var fullNameArr = badgeInfo[FULL_NAME].trim().split(' ');
 			var fullNameFirst = fullNameArr.shift();
 			var fullNameLast = fullNameArr.join(' ');
 
@@ -147,7 +147,7 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 			// Populate the current attendee's selectors
 			selectorObj['input[name='+attendeeFirstNames[0]+']'] = fullNameFirst;
 			selectorObj['input[name='+attendeeLastNames[0]+']'] = fullNameLast;
-			selectorObj['input[name='+attendeeEmailAddresses[0]+']'] = badgeInfo[EMAIL]; // always the same
+			selectorObj['input[name='+attendeeEmailAddresses[0]+']'] = badgeInfo[EMAIL].trim(); // always the same
 			selectorObj['input[name='+attendeeBadgeNames[0]+']'] = badgeName;
 
 			this.fillSelectors('form#registrationForm', selectorObj, false);
