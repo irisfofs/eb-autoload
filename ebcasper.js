@@ -77,13 +77,13 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 				
 			var name = this.evaluate(function(badgeTypeString) {
         // console.log($("tr.ticket_row td:first-child").length);
-				var temp = $("tr.ticket_row td:first-child > div").filter(function() {
-					var txt = $(this).text();
+				var temp = $("tr.ticket_row td:first-child").filter(function() {
+					var txt = $(this).find("div").text();
           // Do exact comparison, otherwise can't pick badges that are strict 
           // substrings of earlier ones
           return badgeTypeString === txt;
+					// console.log("(" + badgeTypeString + ") Badge type " + txt + " || " + (badgeTypeString === txt));
           // var index = txt.indexOf(badgeTypeString);
-					// console.log("(" + badgeTypeString + ") Badge type " + txt + " || " + index);
 					// return index > -1; // JavaScript has no 'contains' method, apparently
 				});
         // console.log(temp.length);
