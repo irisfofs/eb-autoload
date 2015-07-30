@@ -9,7 +9,12 @@ var casper = require('casper').create({
 	verbose: true                  // log messages will be printed out to the console
 });
 
-var badgeData = require(casper.cli.args[0]);
+var data = require(casper.cli.args[0]);
+var badgeData = data["badges"];
+var badgeTypeString = data["badgeTypeString"];
+var badgePaymentType = data["badgePaymentType"];
+
+
 var config = require("config.json")
 // Shift off the header row. That's not helpful.
 // var headers = badgeData.shift();
@@ -27,9 +32,6 @@ var LAST_BADGE_COLUMN = 15;
 
 // var badgeData = [/*[1,"Lorem Ipsum","DevBadgerDontAccept","registration@bronycon.org",""],*/
                  // [1,"John Testerman","Test","registration@bronycon.org",""]];
-
-var badgeTypeString = config["badgeTypeString"];
-var badgePaymentType = config["badgePaymentType"];
 
 casper.start("https://www.eventbrite.com/login/", function() {
 	// Set it up so remote logging gets replayed locally
@@ -75,11 +77,14 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 				
 			var name = this.evaluate(function(badgeTypeString) {
         // console.log($("tr.ticket_row td:first-child").length);
-				var temp = $("tr.ticket_row td:first-child").filter(function() {
+				var temp = $("tr.ticket_row td:first-child > div").filter(function() {
 					var txt = $(this).text();
-					var index = txt.indexOf(badgeTypeString);
+          // Do exact comparison, otherwise can't pick badges that are strict 
+          // substrings of earlier ones
+          return badgeTypeString === txt;
+          // var index = txt.indexOf(badgeTypeString);
 					// console.log("(" + badgeTypeString + ") Badge type " + txt + " || " + index);
-					return index > -1; // JavaScript has no 'contains' method, apparently
+					// return index > -1; // JavaScript has no 'contains' method, apparently
 				});
         // console.log(temp.length);
 				return temp.parent().find('input[name^="quant"]')[0].name;
