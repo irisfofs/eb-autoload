@@ -118,10 +118,12 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 			if (fullNameLast === "") {
 				fullNameLast = "(not provided)";
 			}
+			var trimmedEmail = badgeInfo[EMAIL].trim();
+
 			this.fill('form#registrationForm', {
 				first_name: fullNameFirst,
 				last_name: fullNameLast,
-				email_address: badgeInfo[EMAIL].trim()
+				email_address: trimmedEmail
 			}, false);
 
 			// ********************* Information for each attendee
@@ -134,9 +136,6 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 			// Make it once so we can fill everything at once >:D
 			var selectorObj = {};
 			// Split full name into first and last by the first space
-			var fullNameArr = badgeInfo[FULL_NAME].trim().split(' ');
-			var fullNameFirst = fullNameArr.shift();
-			var fullNameLast = fullNameArr.join(' ');
 
 			// If the badge name is empty, use the "first" name
 			var badgeName = badgeInfo[BADGE_NAME].trim();
@@ -147,7 +146,7 @@ casper.waitForUrl("https://www.eventbrite.com/", function() {
 			// Populate the current attendee's selectors
 			selectorObj['input[name='+attendeeFirstNames[0]+']'] = fullNameFirst;
 			selectorObj['input[name='+attendeeLastNames[0]+']'] = fullNameLast;
-			selectorObj['input[name='+attendeeEmailAddresses[0]+']'] = badgeInfo[EMAIL].trim(); // always the same
+			selectorObj['input[name='+attendeeEmailAddresses[0]+']'] = trimmedEmail; // always the same
 			selectorObj['input[name='+attendeeBadgeNames[0]+']'] = badgeName;
 
 			this.fillSelectors('form#registrationForm', selectorObj, false);
