@@ -1,0 +1,7 @@
+{
+  "login": {
+    "email": "foo@bar.com",
+    "password": "123456"
+  },
+  "eventId": 12345678901
+}
