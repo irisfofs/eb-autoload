@@ -10,22 +10,24 @@ As with all tools based on web scraping and automation, it may break without war
 Make a hidden event to test it with first (and use dummy emails, like your own) before doing anything with your real event.
 
 ## Usage
-In theory, `npm install` should install the needed dependencies.
+`npm install` should install the needed dependencies. Depending on your environment, you may need to install CasperJS globally, either with `npm install -g casperjs` or via the instructions available [here](http://docs.casperjs.org/en/latest/installation.html).
 
+Run the script with:
 ```
 casperjs ebcasper.js badge_data.json --ssl-protocol=any --ignore-ssl-errors=yes
 ```
 
-Last I used this (August 2015), the SSL flags were required to make it work. 
+The SSL flags are required for the script to run.
 
-### Example JSON for badge data
-https://gist.github.com/xiagu/f478a6d7cf8ea3aceaef
 
-### Converting badge data to JSON 
+## Converting badge data to JSON
 A very simple CSV to JSON script is included in `parse.js`.
 
-#### Usage
+### Usage
 
 ```
 node parse.js example.csv > example.json
 ```
+
+### Example JSON
+https://gist.github.com/xiagu/f478a6d7cf8ea3aceaef
